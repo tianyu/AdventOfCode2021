@@ -1,32 +1,59 @@
-// Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-import androidx.compose.material.MaterialTheme
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
-@Composable
-@Preview
-fun App() {
-  var text by remember { mutableStateOf("Hello, World!") }
+private val days = listOf(
+  HydrothermalVenture
+)
 
-  MaterialTheme {
-    Button(onClick = {
-      text = "Hello, Desktop!"
-    }) {
-      Text(text)
+@Composable
+fun App(default: Day = days.first()) = Scaffold(
+  topBar = {
+    TopAppBar(
+      title = { Text("Advent of Code 2021") },
+      elevation = 10.dp,
+    )
+  }
+) {
+  var content: Day? by remember { mutableStateOf(default) }
+  Row(Modifier.fillMaxSize()) {
+    LazyColumn(
+      modifier = Modifier
+        .widthIn(200.dp, 400.dp)
+    ) {
+      itemsIndexed(days, { i, _ -> i }) { i, day ->
+        ListItem(
+          modifier = Modifier
+            .clickable { content = day }
+            .onlyIf({ day === content}) {
+              background(color = MaterialTheme.colors.primarySurface.copy(alpha = 0.125f))
+            },
+          text = { Text(day.name) },
+          overlineText =  { Text("Day ${i + 1}")}
+        )
+      }
     }
+    Divider(
+      modifier = Modifier
+        .fillMaxHeight()
+        .width(1.dp)
+    )
+    content?.invoke()
   }
 }
 
 fun main() = application {
   Window(onCloseRequest = ::exitApplication) {
-    App()
+    Theme {
+      App()
+    }
   }
 }

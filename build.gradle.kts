@@ -3,8 +3,8 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.31"
-    id("org.jetbrains.compose") version "1.0.0"
+    kotlin("jvm") version "1.6.10"
+    id("org.jetbrains.compose") version "1.0.1-rc2"
 }
 
 group = "me.tzhu"
@@ -21,12 +21,25 @@ dependencies {
     implementation(compose.desktop.currentOs)
 }
 
+kotlin {
+    sourceSets {
+        all {
+            languageSettings {
+                optIn("androidx.compose.foundation.ExperimentalFoundationApi")
+                optIn("androidx.compose.material.ExperimentalMaterialApi")
+            }
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 compose.desktop {
