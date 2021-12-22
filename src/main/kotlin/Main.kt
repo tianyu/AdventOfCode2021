@@ -11,11 +11,12 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
 private val days = listOf(
-  HydrothermalVenture
+  HydrothermalVenture,
+  Lanternfish,
 )
 
 @Composable
-fun App(default: Day = days.first()) = Scaffold(
+fun App(default: Day? = days.first()) = Scaffold(
   topBar = {
     TopAppBar(
       title = { Text("Advent of Code 2021") },
@@ -50,10 +51,10 @@ fun App(default: Day = days.first()) = Scaffold(
   }
 }
 
-fun main() = application {
+fun main(vararg args: String) = application {
   Window(onCloseRequest = ::exitApplication) {
     Theme {
-      App()
+      App(args.getOrNull(0)?.toIntOrNull()?.let { days[it] })
     }
   }
 }

@@ -1,7 +1,7 @@
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -13,13 +13,7 @@ object HydrothermalVenture: Day {
   override val name: String = "Hydrothermal Venture"
 
   @Composable
-  override fun invoke() = Column(
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(horizontal = 14.dp)
-      .verticalScroll(rememberScrollState())
-  ) {
-    h3(name)
+  override fun ColumnScope.content() {
     p("""
       You come across a field of hydrothermal vents on the ocean floor! These vents constantly produce large, opaque clouds, so it would be best to avoid them if possible.
 
