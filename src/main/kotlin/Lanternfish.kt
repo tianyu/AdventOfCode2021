@@ -25,7 +25,7 @@ object Lanternfish: Day {
       Find a way to simulate lanternfish. How many lanternfish would there be after 80 days?
     """.trimIndent())
 
-    answer {
+    Answer {
       val tracker = IntArray(9)
       forEachFish {
         tracker[it] += 1
@@ -46,7 +46,7 @@ object Lanternfish: Day {
       How many lanternfish would there be after 256 days?
     """.trimIndent())
 
-    answer {
+    Answer {
       val tracker = LongArray(9)
       forEachFish {
         tracker[it] += 1L

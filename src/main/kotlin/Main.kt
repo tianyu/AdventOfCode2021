@@ -13,6 +13,7 @@ import androidx.compose.ui.window.application
 private val days = listOf(
   HydrothermalVenture,
   Lanternfish,
+  WhaleTreachery,
 )
 
 @Composable

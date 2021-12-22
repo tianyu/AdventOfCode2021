@@ -17,14 +17,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
     implementation(compose.desktop.currentOs)
+    testImplementation(kotlin("test"))
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.25")
 }
 
 kotlin {
     sourceSets {
         all {
             languageSettings {
+                optIn("kotlin.experimental.ExperimentalTypeInference")
                 optIn("androidx.compose.foundation.ExperimentalFoundationApi")
                 optIn("androidx.compose.material.ExperimentalMaterialApi")
             }

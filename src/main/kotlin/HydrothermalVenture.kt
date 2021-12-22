@@ -3,6 +3,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -21,14 +22,19 @@ object HydrothermalVenture: Day {
     """.trimIndent())
 
     h4("Puzzle Input")
-    Canvas(Modifier.width(1000.dp).height(1000.dp)) {
-      forEachVent { x1, y1, x2, y2 ->
-        drawLine(
-          start = Offset(x1.toFloat(), y1.toFloat()),
-          end = Offset(x2.toFloat(), y2.toFloat()),
-          color = Color.Black,
-          alpha = 0.125f
-        )
+    val lines by answering {
+      buildList {
+        forEachVent { x1, y1, x2, y2 ->
+          add(Offset(x1.toFloat(), y1.toFloat()) to Offset(x2.toFloat(), y2.toFloat()))
+        }
+      }
+    }
+
+    lines {
+      Canvas(Modifier.width(1000.dp).height(1000.dp)) {
+        it.forEach { (start, end) ->
+          drawLine(start = start, end = end, color = Color.Black, alpha = 0.125f)
+        }
       }
     }
 
@@ -41,7 +47,16 @@ object HydrothermalVenture: Day {
      Consider only horizontal and vertical lines. At how many points do at least two lines overlap?
     """.trimIndent())
 
-    answer { part1() }
+    Answer {
+      val map = IntArray(1000 * 1000)
+      forEachVent { x1, y1, x2, y2 ->
+        if (x1 != x2 && y1 != y2) return@forEachVent
+        for ((x, y) in Coordinate(x1, y1)..Coordinate(x2, y2)) {
+          map[x * 1000 + y] += 1
+        }
+      }
+      map.count { it >= 2 }
+    }
 
     h4("Part 2")
     p("""
@@ -52,26 +67,15 @@ object HydrothermalVenture: Day {
       You still need to determine the number of points where at least two lines overlap.
     """.trimIndent())
 
-    answer { part2() }
-  }
-
-  private fun part1() = IntArray(1000 * 1000).let { map ->
-    forEachVent { x1, y1, x2, y2 ->
-      if (x1 != x2 && y1 != y2) return@forEachVent
-      for ((x, y) in Coordinate(x1, y1) .. Coordinate(x2, y2)) {
-        map[x * 1000 + y] += 1
+    Answer {
+      val map = IntArray(1000 * 1000)
+      forEachVent { x1, y1, x2, y2 ->
+        for ((x, y) in Coordinate(x1, y1)..Coordinate(x2, y2)) {
+          map[x * 1000 + y] += 1
+        }
       }
+      map.count { it >= 2 }
     }
-    map.count { it >= 2 }
-  }
-
-  private fun part2() = IntArray(1000 * 1000).let { map ->
-    forEachVent { x1, y1, x2, y2 ->
-      for ((x, y) in Coordinate(x1, y1) .. Coordinate(x2, y2)) {
-        map[x * 1000 + y] += 1
-      }
-    }
-    map.count { it >= 2 }
   }
 
   private inline fun forEachVent(action: (x1: Int, y1: Int, x2: Int, y2: Int) -> Unit) {
