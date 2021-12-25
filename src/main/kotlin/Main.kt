@@ -1,3 +1,4 @@
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -50,7 +51,9 @@ fun App(default: Day? = days.first()) = Scaffold(
         .fillMaxHeight()
         .width(1.dp)
     )
-    content?.invoke()
+    Crossfade(content) {
+      it?.render()
+    }
   }
 }
 

@@ -23,7 +23,7 @@ interface Day {
 }
 
 @Composable
-operator fun Day.invoke() = Column(
+fun Day.render() = Column(
   modifier = Modifier
     .fillMaxWidth()
     .padding(horizontal = 14.dp)
