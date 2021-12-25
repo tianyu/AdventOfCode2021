@@ -15,6 +15,7 @@ private val days = listOf(
   Lanternfish,
   WhaleTreachery,
   SevenSegmentSearch,
+  SmokeBasin,
 )
 
 @Composable

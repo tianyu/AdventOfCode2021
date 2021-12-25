@@ -32,3 +32,12 @@ inline operator fun <T> Answer<T>.invoke(render: @Composable (T) -> Unit = { Ans
   Answer.Loading -> p("Computing answer...")
   is Answer.Of -> render(value)
 }
+
+@Composable
+fun <T, U> Answer<T>.transform(produce: CoroutineScope.(T) -> U) =
+  produceState<Answer<U>>(Answer.Loading, this) {
+    value = when (this@transform) {
+      is Answer.Loading -> Answer.Loading
+      is Answer.Of<T> -> Answer.Of(produce(this@transform.value))
+    }
+  }
