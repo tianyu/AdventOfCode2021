@@ -17,6 +17,7 @@ private val days = listOf(
   WhaleTreachery,
   SevenSegmentSearch,
   SmokeBasin,
+  SyntaxScoring,
 )
 
 @Composable
