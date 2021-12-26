@@ -18,6 +18,7 @@ private val days = listOf(
   SevenSegmentSearch,
   SmokeBasin,
   SyntaxScoring,
+  DumboOctopus,
 )
 
 @Composable
