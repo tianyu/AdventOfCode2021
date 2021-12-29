@@ -21,6 +21,7 @@ private val days = listOf(
   DumboOctopus,
   PassagePathing,
   TransparentOrigami,
+  ExtendedPolymerization,
 )
 
 @Composable
@@ -64,7 +65,7 @@ fun App(default: Day? = days.first()) = Scaffold(
 fun main(vararg args: String) = application {
   Window(onCloseRequest = ::exitApplication) {
     Theme {
-      App(args.getOrNull(0)?.toIntOrNull()?.let { days[it + 1] })
+      App(args.getOrNull(0)?.toIntOrNull()?.let { days.getOrNull(it - 1) })
     }
   }
 }
