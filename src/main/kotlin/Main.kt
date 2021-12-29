@@ -20,6 +20,7 @@ private val days = listOf(
   SyntaxScoring,
   DumboOctopus,
   PassagePathing,
+  TransparentOrigami,
 )
 
 @Composable

@@ -26,6 +26,7 @@ kotlin {
     sourceSets {
         all {
             languageSettings {
+                optIn("kotlin.contracts.ExperimentalContracts")
                 optIn("kotlin.experimental.ExperimentalTypeInference")
                 optIn("androidx.compose.foundation.ExperimentalFoundationApi")
                 optIn("androidx.compose.material.ExperimentalMaterialApi")
