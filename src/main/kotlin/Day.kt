@@ -1,10 +1,7 @@
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.io.FileNotFoundException
@@ -23,12 +20,29 @@ interface Day {
 }
 
 @Composable
-fun Day.render() = Column(
-  modifier = Modifier
-    .fillMaxWidth()
-    .padding(horizontal = 14.dp)
-    .verticalScroll(rememberScrollState())
-) {
-  h3(name)
-  content()
+fun Day.render() = Box(modifier = Modifier.fillMaxSize()) {
+  val verticalScrollState = rememberScrollState()
+  val horizontalScrollState = rememberScrollState()
+  Box(
+    modifier = Modifier.fillMaxSize()
+      .verticalScroll(verticalScrollState)
+      .horizontalScroll(horizontalScrollState)
+  ) {
+    Column(modifier = Modifier
+      .align(Alignment.TopCenter)
+      .widthIn(max = 1024.dp)) {
+      h3(name)
+      content()
+    }
+  }
+
+  VerticalScrollbar(
+    modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+    adapter = rememberScrollbarAdapter(verticalScrollState),
+  )
+
+  HorizontalScrollbar(
+    modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(),
+    adapter = rememberScrollbarAdapter(horizontalScrollState),
+  )
 }

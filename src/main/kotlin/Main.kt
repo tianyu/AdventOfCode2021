@@ -35,7 +35,7 @@ fun App(default: Day? = days.first()) = Scaffold(
   Row(Modifier.fillMaxSize()) {
     LazyColumn(
       modifier = Modifier
-        .widthIn(200.dp, 400.dp)
+        .widthIn(100.dp, 400.dp)
     ) {
       itemsIndexed(days, { i, _ -> i }) { i, day ->
         ListItem(
@@ -63,7 +63,7 @@ fun App(default: Day? = days.first()) = Scaffold(
 fun main(vararg args: String) = application {
   Window(onCloseRequest = ::exitApplication) {
     Theme {
-      App(args.getOrNull(0)?.toIntOrNull()?.let { days[it] })
+      App(args.getOrNull(0)?.toIntOrNull()?.let { days[it + 1] })
     }
   }
 }

@@ -1,13 +1,14 @@
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -140,13 +141,22 @@ object DumboOctopus: Day {
   }
 
   @Composable
-  fun List<ByteArray>.render(scale: Float = 10f) = LazyVerticalGrid(
-    cells = GridCells.Fixed(10),
+  fun List<ByteArray>.render(scale: Float = 10f) = Box(
     modifier = Modifier.fillMaxWidth().height(500.dp),
   ) {
-    items(this@render) {
-      it.render(scale)
+    val lazyListState = rememberLazyListState()
+    LazyVerticalGrid(
+      cells = GridCells.Fixed(10),
+      state = lazyListState,
+    ) {
+      items(this@render) {
+        it.render(scale)
+      }
     }
+    VerticalScrollbar(
+      modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+      adapter = rememberScrollbarAdapter(lazyListState),
+    )
   }
 
   operator fun Int.component1() = this / 10
