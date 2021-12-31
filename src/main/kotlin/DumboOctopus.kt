@@ -59,6 +59,7 @@ object DumboOctopus: Day {
       })
     }
 
+    h4("Part 2")
     p("""
       It seems like the individual flashes aren't bright enough to navigate. However, you might have a better option: the flashes seem to be synchronizing!
       

@@ -22,6 +22,7 @@ private val days = listOf(
   PassagePathing,
   TransparentOrigami,
   ExtendedPolymerization,
+  Chiton,
 )
 
 @Composable
