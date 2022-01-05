@@ -23,6 +23,7 @@ private val days = listOf(
   TransparentOrigami,
   ExtendedPolymerization,
   Chiton,
+  PacketDecoder,
 )
 
 @Composable
