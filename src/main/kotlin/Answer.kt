@@ -34,6 +34,25 @@ inline operator fun <T> Answer<T>.invoke(render: @Composable (T) -> Unit = { Ans
 }
 
 @Composable
+inline fun <T> Answer(vararg dependencies: Answer<T>, crossinline produceAnswer: CoroutineScope.(List<T>) -> Any?) {
+  val answer by produceState<Answer<Any?>>(Answer.Loading, *dependencies) {
+    value = Answer.Of(produceAnswer(
+      dependencies.map {
+        when (it) {
+          Answer.Loading -> {
+            value = Answer.Loading
+            return@produceState
+          }
+          is Answer.Of -> it.value
+        }
+      }
+    ))
+  }
+
+  answer.invoke()
+}
+
+@Composable
 fun <T, U> Answer<T>.transform(produce: CoroutineScope.(T) -> U) =
   produceState<Answer<U>>(Answer.Loading, this) {
     value = when (this@transform) {

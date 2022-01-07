@@ -24,6 +24,7 @@ private val days = listOf(
   ExtendedPolymerization,
   Chiton,
   PacketDecoder,
+  TrickShot,
 )
 
 @Composable
